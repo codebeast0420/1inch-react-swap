@@ -17,8 +17,8 @@
 		"ticker": "USDT",
 		"img": "https://cdn.moralis.io/eth/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
 		"name": "Tether USD",
-		"address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-		"decimals": 6
+		"address": "0x55d398326f99059ff775485246999027b3197955",
+		"decimals": 18
 	},
 	{
 		"ticker": "GUSD",
@@ -26,6 +26,13 @@
 		"name": "Gemini USD",
 		"address": "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd",
 		"decimals": 2
+	},
+	{
+		"ticker": "BNB",
+		"img": "https://tokens.1inch.io/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png",
+		"name": "BNB",
+		"address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"decimals": 18
 	},
 	{
 		"ticker": "DAI",

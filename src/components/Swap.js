@@ -85,36 +85,29 @@ function Swap(props) {
 
   async function fetchPrices(one, two) {
 
-    const res = await axios.get(`http://localhost:3001/tokenPrice`, {
-      params: { addressOne: one, addressTwo: two }
-    })
+    // const res = await axios.get(`http://localhost:3001/tokenPrice`, {
+    //   params: { addressOne: one, addressTwo: two }
+    // })
 
-    console.log('data', res.data)
-    setPrices(res.data)
+    // console.log('data', res.data)
+    // setPrices(res.data)
   }
 
   async function fetchDexSwap() {
 
-    const allowance = await axios.get(`https://api.1inch.io/v5.0/1/approve/allowance?tokenAddress=${tokenOne.address}&walletAddress=${address}`)
+    const approve = await axios.post(`https://1inch-node-swap.vercel.app/approve`, { tokenAddress: tokenOne.address, walletAddress: address })
+    console.log(approve.data.result);
 
-    if (allowance.data.allowance === "0") {
+    setTxDetails(approve.data.result);
 
-      const approve = await axios.get(`https://api.1inch.io/v5.0/1/approve/transaction?tokenAddress=${tokenOne.address}`)
+    // const tx = await axios.get(
+    //   `https://api.1inch.io/v5.0/1/swap?fromTokenAddress=${tokenOne.address}&toTokenAddress=${tokenTwo.address}&amount=${tokenOneAmount.padEnd(tokenOne.decimals + tokenOneAmount.length, '0')}&fromAddress=${address}&slippage=${slippage}`
+    // )
 
-      setTxDetails(approve.data);
-      console.log("not approved")
-      return
+    // let decimals = Number(`1E${tokenTwo.decimals}`)
+    // setTokenTwoAmount((Number(tx.data.toTokenAmount) / decimals).toFixed(2));
 
-    }
-
-    const tx = await axios.get(
-      `https://api.1inch.io/v5.0/1/swap?fromTokenAddress=${tokenOne.address}&toTokenAddress=${tokenTwo.address}&amount=${tokenOneAmount.padEnd(tokenOne.decimals + tokenOneAmount.length, '0')}&fromAddress=${address}&slippage=${slippage}`
-    )
-
-    let decimals = Number(`1E${tokenTwo.decimals}`)
-    setTokenTwoAmount((Number(tx.data.toTokenAmount) / decimals).toFixed(2));
-
-    setTxDetails(tx.data.tx);
+    // setTxDetails(tx.data.tx);
 
   }
 
@@ -126,7 +119,7 @@ function Swap(props) {
   }, [])
 
   useEffect(() => {
-
+    console.log('txdetails', txDetails)
     if (txDetails.to && isConnected) {
       sendTransaction();
     }
@@ -223,7 +216,7 @@ function Swap(props) {
             placeholder="0"
             value={tokenOneAmount}
             onChange={changeAmount}
-            disabled={!prices}
+          // disabled={!prices}
           />
           <Input placeholder="0" value={tokenTwoAmount} disabled={true} />
           <div className="switchButton" onClick={switchTokens}>
